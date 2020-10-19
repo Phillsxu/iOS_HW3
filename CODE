@@ -1,0 +1,128 @@
+import SwiftUI
+struct Band {
+    let name: String
+    let entertainer: String
+    let bio: String
+}
+struct BandRow: View {
+    let band: Band
+    var body: some View {
+        HStack {
+            Image(band.name)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 80, height: 80)
+                .clipped()
+            VStack(alignment: .leading) {
+                Text(band.name)
+                Text(band.entertainer)
+            }
+            Spacer()
+        }
+    }
+}
+struct BandDetail: View {
+    let band: Band
+    var body: some View {
+        VStack {
+            Image(band.name)
+                .resizable()
+                .scaledToFill()
+                .frame(height: 300)
+                .clipped()
+            Text(band.bio)
+                .padding()
+        }
+        .navigationBarTitle(band.name)
+    }
+}
+struct Girlband: View {
+    let girlband = [
+        Band(name: "BLΛƆKPIИK", entertainer: "YG Entertainment", bio: "BLACKPINK (Hangul: 블랙핑크; commonly stylized as BLΛƆKPIИK) is a South Korean girl group formed by YG Entertainment, consisting of members Jisoo, Jennie, Rosé, and Lisa. The group debuted in August 2016 with their single album Square One, which featured Whistle and Boombayah, their first number-one entries on South Korea's Gaon Digital Chart and the Billboard World Digital Song Sales chart, respectively."),
+        Band(name: "Girls' Generation", entertainer: "SM Entertainment", bio: "Girls' Generation (Korean: 소녀시대; RR: Sonyeo Sidae), also known as SNSD, is a South Korean girl group formed by SM Entertainment. The group is composed of eight members: Taeyeon, Sunny, Tiffany, Hyoyeon, Yuri, Sooyoung, Yoona, and Seohyun. Originally a nine-piece group, Jessica departed from the group in September 2014. One of the prominent figures of the Korean Wave, the group has earned numerous accolades and the honorific nickname The Nation's Girl Group in their home country."),
+        Band(name: "Twice", entertainer: "JYP Entertainment", bio: "Twice (Korean: 트와이스; Japanese: トゥワイス) is a South Korean girl group formed by JYP Entertainment. The group is composed of nine members: Nayeon, Jeongyeon, Momo, Sana, Jihyo, Mina, Dahyun, Chaeyoung, and Tzuyu. Twice was formed under the television program Sixteen (2015) and debuted on October 20, 2015, with the extended play (EP) The Story Begins."),
+        Band(name: "ITZY", entertainer: "JYP Entertainment", bio: "Itzy (stylized as ITZY; Korean: 있지; RR: Itji) is a South Korean girl group formed by JYP Entertainment, consisting of members Yeji, Lia, Ryujin, Chaeryeong, and Yuna. The group debuted on February 12, 2019, with the release of their single album, It'z Different."),
+        Band(name: "Red Velvet", entertainer: "SM Entertainment", bio: "Red Velvet (Hangul: 레드벨벳) is a South Korean girl group formed and managed by SM Entertainment. They debuted on August 1, 2014 with the digital single Happiness with the four-member line-up of Irene, Seulgi, Wendy and Joy. Yeri joined the group in March 2015, following their first major release, Ice Cream Cake. Musically, Red Velvet employs a unique dual sonic concept that reflects their own group name: their predominantly-pop red side experiments occasionally with electronic, funk and hip hop, while their velvet side focuses on '90s-influenced R&B with elements of ballad and jazz."),
+        Band(name: "MAMAMOO", entertainer: "RBW", bio: "Mamamoo (Korean: 마마무) is a South Korean girl group formed by RBW (formerly WA Entertainment) in 2014. The group officially debuted on June 18, 2014, with the single Mr. Ambiguous. Their debut was considered by some critics as one of the best K-pop debuts of 2014. They are recognized for their retro, jazz, R&B concepts and their strong vocal performances."),
+        Band(name: "(G)I-DLE", entertainer: "Cube Entertainment", bio: "(G)I-dle (Korean: (여자)아이들; RR: Yeoja Aideul), is a South Korean multinational girl group formed by Cube Entertainment in 2018. The group consists of six members: Miyeon, Minnie, Soojin, Soyeon, Yuqi, and Shuhua. The group debuted on May 2, 2018, with their first extended play titled I Am and its lead single Latata. A year later, the group debuted in Japan on July 31, 2019, under U-Cube with Latata."),
+        Band(name: "EVERGLOW", entertainer: "KQ Entertainment", bio: "Everglow (에버글로우) is a South Korean girl group under Yuehua Entertainment. The group is composed of six members: E:U, Sihyeon, Mia, Onda, Aisha, and Yiren. Everglow debuted on March 18, 2019, with the single album Arrival of Everglow."),
+        Band(name: "IZ*ONE", entertainer: "Swing Entertainment", bio: "Iz*One (Korean: 아이즈원, romanized: Aijeuwon; Japanese: アイズワン, romanized: Aizuwan) is a South Korean–Japanese girl group formed through the Mnet reality competition show Produce 48. The group, managed by Off the Record and Swing Entertainment, is composed of twelve members: Jang Won-young, Sakura Miyawaki, Jo Yu-ri, Choi Ye-na, An Yu-jin, Nako Yabuki, Kwon Eun-bi, Kang Hye-won, Hitomi Honda, Kim Chae-won, Kim Min-ju, and Lee Chae-yeon. Iz*One debuted on October 29, 2018 with their first extended play (EP) Color*Iz."),
+        Band(name: "GFriend", entertainer: "Source Music", bio: "GFriend (Korean: 여자친구; RR: Yeoja Chingu) is a six-member South Korean girl group formed by Source Music in 2015. The group consists of Sowon, Yerin, Eunha, Yuju, SinB, and Umji. They made their debut with the EP Season of Glass on January 15, 2015. GFriend won several 2015 female rookie awards and has garnered momentum since their debut despite being from a small company.")
+    ]
+    var body: some View {
+        NavigationView {
+            List(girlband.indices) { (item) in
+                NavigationLink(destination: BandDetail(band: self.girlband[item])) {
+                    BandRow(band: self.girlband[item])
+                }
+            }
+            .navigationBarTitle("Girlband")
+        }
+    }
+}
+struct Home: View {
+    @State private var rotateDegree: Double = 0
+    var body: some View {
+        Image("KPOP")
+            .resizable()
+            .scaledToFit()
+            .rotationEffect(.degrees(rotateDegree))
+                  .animation(
+                     Animation.linear(duration: 5)
+                         .repeatCount(3, autoreverses: false)
+                  )
+            .onAppear {
+                rotateDegree = 360
+            }
+    }
+}
+struct Boyband: View {
+    let boyband = [
+        Band(name: "Super Junior", entertainer: "SM Entertainment", bio: "Super Junior (Korean: 슈퍼주니어), also known as SJ or SuJu, is a South Korean boy band debuted on November 6, 2005, by producer Lee Soo-man of SM Entertainment. They are also dubbed by the media and Korean Music Awards as the King of Hallyu Wave due to their prominent contributions in Korean Wave. The group comprised a total of thirteen members at its peak. Super Junior originally debuted with twelve members, consisting of leader Leeteuk, Heechul, Han Geng, Yesung, Kangin, Shindong, Sungmin, Eunhyuk, Siwon, Donghae, Ryeowook, and Kibum. Kyuhyun joined the group later in 2006."),
+        Band(name: "BTS", entertainer: "Big Hit Entertainment", bio: "BTS (Korean: 방탄소년단; RR: Bangtan Sonyeondan), also known as the Bangtan Boys, is a seven-member South Korean boy band that began formation in 2010 and debuted in 2013 under Big Hit Entertainment. The group is composed of seven members: RM, Jin, Suga, J-Hope, Jimin, V, and Jungkook"),
+        Band(name: "Stray Kids", entertainer: "JYP Entertainment", bio: "Stray Kids (Korean: 스트레이 키즈; RR: Seuteurei kijeu; often abbreviated as SKZ) is a South Korean boy band formed by JYP Entertainment through the 2017 reality show of the same name. The group is composed of eight members: Bang Chan, Lee Know, Changbin, Hyunjin, Han, Felix, Seungmin, and I.N."),
+        Band(name: "Got7", entertainer: "JYP Entertainment", bio: "Got7 (Korean: 갓세븐; commonly stylized as GOT7) is a South Korean boy band formed by JYP Entertainment. The group is composed of seven members: JB, Mark, Jackson, Jinyoung, Youngjae, BamBam, and Yugyeom. Got7 debuted in January 2014 with the release of their first EP Got It?, which peaked at number two on the Gaon Album Chart and number one on Billboard's World Albums Chart."),
+        Band(name: "EXO", entertainer: "SM Entertainment", bio: "Exo (Korean: 엑소) is a South Korean–Chinese boy band based in Seoul, consisting of nine members: Xiumin, Suho, Lay, Baekhyun, Chen, Chanyeol, D.O., Kai and Sehun. Former members Kris, Luhan, and Tao departed the group amid legal battles in 2014 and 2015. The band was formed by SM Entertainment in 2011 and debuted in 2012. Their music—released and performed in Korean, Mandarin, and Japanese—primarily incorporates pop, hip-hop, and R&B, including elements of electronic dance music genres such as house and trap."),
+        Band(name: "Tomorrow X Together", entertainer: "Big Hit Entertainment", bio: "Tomorrow X Together (stylized in all capital; Korean: 투모로우바이투게더; RR: Tumoroubaitugedeo), commonly known as TXT), is a five-member South Korean boy band formed by Big Hit Entertainment. The group consists of five members Soobin, Yeonjun, Beomgyu, Taehyun and Huening Kai .They debuted on March 4, 2019 with the EP The Dream Chapter: Star. The album debuted and peaked at number one on the Gaon Album Chart and Billboard World Albums Chart and entered the US Billboard 200 at number 140, becoming the highest-charting debut album by any male K-pop group."),
+        Band(name: "NCT 127", entertainer: "SM Entertainment", bio: "NCT 127 (Korean: 엔시티 127; RR: ensiti il-i-chil) is the second sub-unit of the South Korean boy band NCT, formed and currently managed by SM Entertainment. Their unit name is a combination of the acronym for Neo Culture Technology which is the meaning for their parental group's unlimited members, and as the unit is localized in Seoul, hence the number 127 representing the longitude coordinate of the city.[3] Originally debuted on July 1, 2016, the unit's original line up was composed of seven members: Taeil, Taeyong (leader), Yuta, Jaehyun, Winwin, Mark, and Haechan for their debut extended play NCT #127, which was a commercial success upon its release and earned the unit several nominations, eventually won them the Best New Group title at several South Korea music awards in 2016."),
+        Band(name: "Ateez", entertainer: "KQ Entertainment", bio: "Ateez (Korean: 에이티즈), is a South Korean boy group formed by KQ Entertainment. The group consists of eight members: Hongjoong, Seonghwa, Yunho, Yeosang, San, Mingi, Wooyoung, and Jongho. They debuted on October 24, 2018 with the EP Treasure EP.1: All to Zero. As rookies, Ateez were recipients of the Next Generation Award at the 2019 Golden Disc Awards, as well as being named Worldwide Fans' Choice at the 2019 Mnet Asian Music Awards (MAMA)."),
+        Band(name: "Big Bang", entertainer: "YG Entertainment", bio: "Big Bang (Korean: 빅뱅; stylized as BIGBANG) is a South Korean boy band formed by YG Entertainment. The group consists of four members: G-Dragon, T.O.P, Taeyang, and Daesung; former member Seungri retired from the entertainment industry on March 11, 2019. Dubbed the Kings of K-pop, they helped spread the Korean Wave internationally and are one of the most influential acts in K-pop history. They are known for their trendsetting musical experimentation, self-production, and stage presence."),
+        Band(name: "SHINee", entertainer: "SM Entertainment", bio: "Shinee (/ˈʃaɪniː/ SHY-nee; Korean: 샤이니, romanized: Syaini; Japanese: シャイニー, romanized: Shainī) is a South Korean boy band formed by SM Entertainment in 2008. The group's musical impact in their native country has earned them numerous accolades and the title Princes of K-pop. The group is composed of four members: Onew, Key, Minho, and Taemin. Originally a five-piece group, vocalist Jonghyun died in December 2017.")
+    ]
+    var body: some View {
+        NavigationView {
+            List(boyband.indices) { (item) in
+                NavigationLink(destination: BandDetail(band: self.boyband[item])) {
+                    BandRow(band: self.boyband[item])
+                }
+            }
+            .navigationBarTitle("Boyband")
+        }
+    }
+}
+struct AppView: View {
+    var body: some View {
+        TabView {
+            Home()
+                .tabItem {
+                    Image(systemName: "music.house.fill")
+                    Text("Home")
+            }
+            Boyband()
+                .tabItem {
+                    Image(systemName: "person.circle.fill")
+                    Text("Boyband")
+            }
+            Girlband()
+                .tabItem {
+                    Image(systemName: "person.circle")
+                    Text("Girlband")
+            }
+        }
+    }
+}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        AppView()
+    }
+}
